@@ -35,6 +35,14 @@ resource "google_compute_subnetwork" "monitoring-sub" {
   network = "${google_compute_network.monitoring.self_link}"
 }
 
+# PEERING
+
+resource "google_compute_network_peering" "frontend-backend-peering" {
+  name         = "frontend-backend-peering"
+  network      = google_compute_network.frontend-network.id
+  peer_network = google_compute_network.backend-network.id
+}
+
 #FORWARDING_RULES
 
 resource "google_compute_forwarding_rule" "frontend-https" {
