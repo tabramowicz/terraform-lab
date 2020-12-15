@@ -26,5 +26,5 @@ resource "google_compute_instance_template" "frontend_template" {
     boot         = true
   }
 
-  tags = ["allow-ssh", "load-balanced-backend"]
+  tags = ["allow-https"]
 }

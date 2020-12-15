@@ -5,7 +5,7 @@ resource "google_compute_instance" "frontend" {
   zone = "europe-west4-a"
   can_ip_forward = "false"
 
-    tags = []
+    tags = [allow-https]
 
 
   boot_disk {
