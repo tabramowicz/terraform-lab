@@ -38,3 +38,50 @@ resource "google_compute_http_health_check" "default" {
   check_interval_sec = 1
   timeout_sec        = 1
 }
+
+resource "google_dns_record_set" "frontend" {
+  name = "frontend-1.${google_dns_managed_zone.prod.dns_name}"
+  type = "A"
+  ttl  = 300
+
+  managed_zone = google_dns_managed_zone.prod.name
+
+  rrdatas = [google_compute_instance.frontend.network_interface[0].access_config[0].nat_ip]
+}
+
+resource "google_dns_record_set" "cname" {
+  name         = "frontend-1.${google_dns_managed_zone.prod.dns_name}"
+  managed_zone = google_dns_managed_zone.prod.name
+  type         = "CNAME"
+  ttl          = 300
+  rrdatas      = ["frontend-1.domena.com."]
+}
+
+resource "google_dns_record_set" "cname" {
+  name         = "frontend-2.${google_dns_managed_zone.prod.dns_name}"
+  managed_zone = google_dns_managed_zone.prod.name
+  type         = "CNAME"
+  ttl          = 300
+  rrdatas      = ["frontend-2.domena.com."]
+}
+
+resource "google_dns_record_set" "cname" {
+  name         = "frontend-3.${google_dns_managed_zone.prod.dns_name}"
+  managed_zone = google_dns_managed_zone.prod.name
+  type         = "CNAME"
+  ttl          = 300
+  rrdatas      = ["frontend-3.domena.com."]
+}
+
+resource "google_dns_record_set" "cname" {
+  name         = "frontend-4.${google_dns_managed_zone.prod.dns_name}"
+  managed_zone = google_dns_managed_zone.prod.name
+  type         = "CNAME"
+  ttl          = 300
+  rrdatas      = ["frontend-4.domena.com."]
+}
+
+resource "google_dns_managed_zone" "prod" {
+  name     = "prod-zone"
+  dns_name = "prod.domena.com"
+}
